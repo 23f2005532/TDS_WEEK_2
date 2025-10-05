@@ -36,6 +36,6 @@ jobs:
       - name: Install dependencies
         run: |
           # Example for Python
-          pip install -r requirements.txt
+          pip install numpy
           # Example for Node.js
           npm install
