@@ -1,0 +1,37 @@
+name: Cache Dependencies
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Cache dependencies
+      - name: prime-cache-bd5d818
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip  # Example: caching pip dependencies
+          key: cache-bd5d818
+
+      # Show cache result
+      - name: Show cache result
+        run: |
+          if [ -n "${{ steps.cache-step.outputs.cache-hit }}" ]; then
+            echo "Cache hit!"
+          else
+            echo "Cache miss!"
+          fi
+
+      # Install dependencies (example)
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests
