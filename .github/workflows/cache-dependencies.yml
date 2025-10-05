@@ -14,9 +14,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step to prime the cache
-      - name: Prime cache bd5d818
-        id: prime-cache
+      # Step MUST be named prime-cache-bd5d818
+      - name: prime-cache-bd5d818
+        id: cache
         uses: actions/cache@v4
         with:
           path: |
@@ -26,7 +26,7 @@ jobs:
 
       - name: Show cache result
         run: |
-          if [ -n "${{ steps.prime-cache.outputs.cache-hit }}" ]; then
+          if [ "${{ steps.cache.outputs.cache-hit }}" == "true" ]; then
             echo "Cache hit!"
           else
             echo "Cache miss!"
@@ -35,6 +35,6 @@ jobs:
       # Example install step (to populate cache)
       - name: Install dependencies
         run: |
-          # Example for Python
-          pip install numpy
-         
+          # For Python
+          pip install -r requirements.txt
+        
